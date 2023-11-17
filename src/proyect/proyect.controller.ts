@@ -2,42 +2,50 @@ import { Controller, Get, Post, Put, Delete, Param, Body, NotFoundException } fr
 import { CreateProyectDto } from './dto/create-proyect.dto';
 import { ProyectService } from './proyect.service';
 import { UpdateProyectDto } from './dto/update-proyect.dto';
+import { Proyect } from './entities/proyect.entity';
 
-@Controller('proyect')
+@Controller('project')
 export class ProyectController {
   constructor(private readonly proyectService: ProyectService) {}
 
   @Post()
   async create(@Body() createProyectDto: CreateProyectDto) {
-    const proyect = await this.proyectService.create(createProyectDto);
-    return proyect;
+    const project = await this.proyectService.create(createProyectDto);
+    return project;
   }
 
   @Get()
   async findAll() {
-    const proyects = await this.proyectService.findAll();
-    return proyects;
+    const projects = await this.proyectService.findAll();
+    return projects;
   }
 
   @Get(':id')
   async findOne(@Param('id') id: number) {
-    const proyect = await this.proyectService.findOne(id);
-    if (!proyect) {
-      throw new NotFoundException('Proyect not found');
+    const project = await this.proyectService.findOne(id);
+    if (!project) {
+      throw new NotFoundException('Project not found');
     }
-    return proyect;
+    return project;
   }
 
 
   @Put(':id')
   async update(@Param('id') id: number, @Body() updateProyectDto: UpdateProyectDto) {
-    const proyect = await this.proyectService.update(id, updateProyectDto);
-    return proyect;
+    const project = await this.proyectService.update(id, updateProyectDto);
+    return project;
   }
 
   @Delete(':id')
   async remove(@Param('id') id: number) {
     await this.proyectService.remove(id);
-    return 'User deleted';
+    return 'Project deleted';
+  }
+
+  @Get('byIds/:ids')
+  async getProyectsByIds(@Param('ids') ids: string): Promise<Proyect[]> {
+    const projectIds = ids.split(',').map(Number);
+    const teams = await this.proyectService.findProyectsById(projectIds);
+    return teams;
   }
 }

@@ -44,9 +44,9 @@ export class MemberController {
     return 'User deleted';
   }
 
-  @Get('teamIdsByEmail/:email')
+  @Get('projectIdsByEmail/:email')
   async findTeamsByEmail(@Param('email') email: string): Promise<number[]> {
-    const teamIds = await this.memberService.findTeamsByEmail(email);
-    return teamIds;
+    const projectIds = await this.memberService.findProjectsByEmail(email);
+    return projectIds;
   }
 }

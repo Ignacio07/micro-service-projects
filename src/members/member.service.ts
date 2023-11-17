@@ -47,9 +47,9 @@ export class MemberService {
         await this.memberRepository.remove(team);
     }
 
-    async findTeamsByEmail(email: string): Promise<number[]> {
+    async findProjectsByEmail(email: string): Promise<number[]> {
         const members = await this.memberRepository.find({where : {email}});
-        const teamIds = members.map((member) => member.id_team);
-        return teamIds;
+        const projectIds = members.map((member) => member.id_project);
+        return projectIds;
       }  
 } 

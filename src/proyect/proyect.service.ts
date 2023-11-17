@@ -14,8 +14,8 @@ export class ProyectService {
   ) {}
 
   async create(createProyectDto: CreateProyectDto): Promise<Proyect> {
-    const proyect = this.proyectRepository.create(createProyectDto);
-    return await this.proyectRepository.save(proyect);
+    const project = this.proyectRepository.create(createProyectDto);
+    return await this.proyectRepository.save(project);
   }
 
 
@@ -28,19 +28,27 @@ export class ProyectService {
   }
 
   async update(id: number, updateProyectDto: UpdateProyectDto): Promise<Proyect | undefined> {
-    const proyect = await this.proyectRepository.findOneBy({id});
-    if (!proyect) {
-      throw new BadRequestException('Proyect not found');
+    const project = await this.proyectRepository.findOneBy({id});
+    if (!project) {
+      throw new BadRequestException('Project not found');
     }
-    Object.assign(proyect, updateProyectDto);
-    return await this.proyectRepository.save(proyect);
+    Object.assign(project, updateProyectDto);
+    return await this.proyectRepository.save(project);
   }
 
   async remove(id: number): Promise<void> {
-    const proyect = await this.proyectRepository.findOneBy({id});
-    if (!proyect) {
-      throw new BadRequestException('Proyect not found');
+    const project = await this.proyectRepository.findOneBy({id});
+    if (!project) {
+      throw new BadRequestException('Project not found');
     }
-    await this.proyectRepository.remove(proyect);
+    await this.proyectRepository.remove(project);
   }
+
+  async findProyectsById(projectIds: number[]): Promise<Proyect[]> {
+    const projects = await this.proyectRepository.createQueryBuilder('project')
+        .whereInIds(projectIds)
+        .getMany();
+    console.log(projects);
+    return projects;
+}
 }
