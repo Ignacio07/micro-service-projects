@@ -12,5 +12,5 @@ export class CreateMemberDto{
 
     @IsNumber()
     @IsNotEmpty()
-    id_team: number;
+    id_project: number;
 }
