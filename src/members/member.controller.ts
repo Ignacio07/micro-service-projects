@@ -7,7 +7,7 @@ import { MemberService } from './member.service';
 import { CreateMemberDto } from './dto/create.member.dto';
 import { UpdateMemberDto } from './dto/update.member.dto';
 
-@Controller('teams')
+@Controller('members')
 export class MemberController {
   constructor(private readonly memberService: MemberService) {}
 
