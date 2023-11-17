@@ -51,5 +51,14 @@ export class MemberService {
         const members = await this.memberRepository.find({where : {email}});
         const projectIds = members.map((member) => member.id_project);
         return projectIds;
-      }  
+    }
+    
+    async findByIdProject(id: number): Promise<{emails: string[]}>{
+        const members = await this.memberRepository.createQueryBuilder('member')
+            .where('member.id_project = :id', { id })
+            .getMany();
+
+        const emails = members.map((member) => member.email);
+        return { emails }; 
+    }
 } 

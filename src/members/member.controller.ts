@@ -49,4 +49,10 @@ export class MemberController {
     const projectIds = await this.memberService.findProjectsByEmail(email);
     return projectIds;
   }
+
+  @Get('members/:id_project')
+  async findMemberByIdTeam(@Param('id_project') id_project: string): Promise<{emails: string[]}>{
+    const id = parseInt(id_project,10);
+    return await this.memberService.findByIdProject(id);
+  }
 }

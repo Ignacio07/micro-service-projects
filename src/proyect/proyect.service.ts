@@ -50,5 +50,5 @@ export class ProyectService {
         .getMany();
     console.log(projects);
     return projects;
-}
+  }
 }
