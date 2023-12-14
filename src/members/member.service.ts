@@ -59,6 +59,7 @@ export class MemberService {
             .getMany();
 
         const emails = members.map((member) => member.email);
+        console.log(emails);
         return { emails }; 
     }
 } 

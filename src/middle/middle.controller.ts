@@ -25,13 +25,10 @@ export class MiddleController {
 
     @Post('new-member')
     async addMemberToProject(@Body() createMemberProjectDto: CreateMemberProjectDto) {
-        try {
-            const result = await this.middleService.addMemberToProject(createMemberProjectDto);
-            console.log(result);
-            return result;
-        } catch (error) {
-            return { success: false, error: error.message };
-        }
+        const result = await this.middleService.addMemberToProject(createMemberProjectDto);
+        console.log(result);
+        return result;
+        
     }
 
 

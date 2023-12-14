@@ -51,8 +51,9 @@ export class MemberController {
   }
 
   @Get('members/:id_project')
-  async findMemberByIdTeam(@Param('id_project') id_project: string): Promise<{emails: string[]}>{
+  async findMemberByIdProject(@Param('id_project') id_project: string): Promise<{emails: string[]}>{
     const id = parseInt(id_project,10);
+    console.log(id);
     return await this.memberService.findByIdProject(id);
   }
 }
