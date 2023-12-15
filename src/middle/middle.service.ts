@@ -53,4 +53,16 @@ export class MiddleService {
         return add;
     }
 
+    async deleteProjectAndMembers(id: string): Promise<string>{
+        const id_project = parseInt(id, 10);
+        const existingProject = await this.proyectService.findOne(id_project);
+        console.log(id, existingProject);
+        if (!existingProject) {
+          throw new Error('El Projecto no existe');
+        }
+        await this.memberService.deleteMembersByProjectId(id_project);
+        await this.proyectService.remove(id_project);
+        return 'Proyecto eliminado';
+    }
+
 }

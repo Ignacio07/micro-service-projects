@@ -56,4 +56,10 @@ export class MemberController {
     console.log(id);
     return await this.memberService.findByIdProject(id);
   }
+
+  @Delete('member-project/:email')
+  async deleteMemberProject(@Param('email') email: string, id_project: string){
+    const id = parseInt(id_project,10);
+    return await this.memberService.deleteMemberProject(id, email);
+  }
 }

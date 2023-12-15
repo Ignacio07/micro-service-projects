@@ -2,7 +2,7 @@
 https://docs.nestjs.com/controllers#controllers
 */
 
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Delete, Get, Param } from '@nestjs/common';
 import { MiddleService } from './middle.service';
 import { Post, Body } from '@nestjs/common';
 import { NewProjectDto } from './dto/new.project.dto';
@@ -29,6 +29,11 @@ export class MiddleController {
         console.log(result);
         return result;
         
+    }
+
+    @Delete('delete-proyect/:id')
+    async deleteTeamAndMembers(@Param('id') id: string){
+        return await this.middleService.deleteProjectAndMembers(id);
     }
 
 
