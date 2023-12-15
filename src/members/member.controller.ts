@@ -13,29 +13,29 @@ export class MemberController {
 
   @Post()
   async create(@Body() createMemberDto: CreateMemberDto){
-    const team = await this.memberService.create(createMemberDto);
-    return team;
+    const member = await this.memberService.create(createMemberDto);
+    return member;
   }
 
   @Get()
   async findAll(){
-    const teams = await this.memberService.findAll();
-    return teams;
+    const members = await this.memberService.findAll();
+    return members;
   }
 
   @Get(':email')
   async findOne(@Param('email') email: string){
-    const team = await this.memberService.findOne(email);
-    if(!team){
+    const member = await this.memberService.findOne(email);
+    if(!member){
         throw new NotFoundException('User not found');
     }
-    return team;
+    return member;
   }
 
   @Put(':email')
   async update(@Param('email') email: string, @Body() updateMemberDto: UpdateMemberDto){
-    const team = await this.memberService.update(email, updateMemberDto);
-    return team;
+    const member = await this.memberService.update(email, updateMemberDto);
+    return member;
   }
 
   @Delete(':email')
