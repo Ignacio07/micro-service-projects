@@ -44,6 +44,11 @@ export class MiddleService {
         if (!existingProject) {
             throw new Error('El proyecto no existe');
         }
+
+        const member = await this.memberService.findByIdProject(id_project);
+        if(member){
+            throw new Error('Miembro Existente');
+        }
         const add = await this.memberService.create({email, rol, id_project})
         return add;
     }
