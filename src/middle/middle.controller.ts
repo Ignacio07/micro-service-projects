@@ -13,9 +13,10 @@ import { CreateMemberProjectDto } from './dto/create.member.project.dto';
 export class MiddleController { 
     constructor(private readonly middleService: MiddleService) {}
 
-    @Get('get-projects/:data')
-    async getTeamNames(@Body() data: { email: string }){
-        return await this.middleService.getProjects(data);
+    @Get('get-projects/:email')
+    async getTeamNames(@Param('email') email: string ){
+        console.log(email);
+        return await this.middleService.getProjects(email);
     }
 
     @Post('new-project')

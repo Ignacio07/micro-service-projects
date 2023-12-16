@@ -65,20 +65,20 @@ export class MemberService {
 
     async deleteMemberProject(id_project: number, email: string): Promise<string>{
         const existingMember = await this.memberRepository.findOne({ where: {email, id_project}});
-        console.log(id_project, existingMember);
+        console.log(existingMember);
         if (!existingMember) {
           throw new Error('El Miembro no existe');
         }
-        await this.memberRepository.delete(existingMember);
+        await this.memberRepository.remove(existingMember);
         return 'Miembro eliminado';
     }
 
     async deleteMembersByProjectId(id_project: number): Promise<void> {
         try {
           const membersToDelete = await this.memberRepository.find({ where : {id_project} });
-          await Promise.all(membersToDelete.map(member => this.memberRepository.delete(member)));
+          await Promise.all(membersToDelete.map(member => this.memberRepository.remove(member)));
         } catch (error) {
-          throw new Error(`Error al eliminar miembros del proyecto: ${error.message}`);
+          throw new Error(`Error al eliminar miembros del proyecto: ${error}`);
         }
     }
 } 

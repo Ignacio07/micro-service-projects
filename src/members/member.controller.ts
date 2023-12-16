@@ -53,13 +53,13 @@ export class MemberController {
   @Get('members/:id_project')
   async findMemberByIdProject(@Param('id_project') id_project: string): Promise<{emails: string[]}>{
     const id = parseInt(id_project,10);
-    console.log(id);
     return await this.memberService.findByIdProject(id);
   }
 
-  @Delete('member-project/:email')
-  async deleteMemberProject(@Param('email') email: string, id_project: string){
-    const id = parseInt(id_project,10);
-    return await this.memberService.deleteMemberProject(id, email);
+  @Delete('member-project/:email/:id')
+  async deleteMemberProject(@Param('email') email: string, @Param('id') id: string){
+    console.log(email,id);
+    const id_project = parseInt(id,10);
+    return await this.memberService.deleteMemberProject(id_project, email);
   }
 }

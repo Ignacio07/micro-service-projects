@@ -17,9 +17,7 @@ export class MiddleService {
     ) {}
 
 
-    async getProjects(data: { email: string }): Promise<{ ids: number[]; names: string[] }> {
-        const email = data.email;
-    
+    async getProjects( email: string ): Promise<{ ids: number[]; names: string[] }> {
         const projectIds = await this.memberService.findProjectsByEmail(email);
         const projects = await this.proyectService.findProyectsById(projectIds);
         const ids = projects.map((project) => project.id);
