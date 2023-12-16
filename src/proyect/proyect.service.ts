@@ -45,10 +45,14 @@ export class ProyectService {
   }
 
   async findProyectsById(projectIds: number[]): Promise<Proyect[]> {
-    const projects = await this.proyectRepository.createQueryBuilder('project')
-        .whereInIds(projectIds)
-        .getMany();
-    console.log(projects);
-    return projects;
+    try{
+      const projects = await this.proyectRepository.createQueryBuilder('project')
+          .whereInIds(projectIds)
+          .getMany();
+      console.log(projects);
+      return projects;
+    } catch (error) {
+      throw new Error('Error al encontrar proyectos');
+    }
   }
 }

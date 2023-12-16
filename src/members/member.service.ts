@@ -48,29 +48,41 @@ export class MemberService {
     }
 
     async findProjectsByEmail(email: string): Promise<number[]> {
-        const members = await this.memberRepository.find({where : {email}});
-        const projectIds = members.map((member) => member.id_project);
-        return projectIds;
+        try{
+            const members = await this.memberRepository.find({where : {email}});
+            const projectIds = members.map((member) => member.id_project);
+            return projectIds;
+        } catch (error) {
+            throw new Error('Error al encontrar proyectos');
+        }
     }
     
     async findByIdProject(id: number): Promise<{emails: string[]}>{
-        const members = await this.memberRepository.createQueryBuilder('member')
-            .where('member.id_project = :id', { id })
-            .getMany();
+        try{
+            const members = await this.memberRepository.createQueryBuilder('member')
+                .where('member.id_project = :id', { id })
+                .getMany();
 
-        const emails = members.map((member) => member.email);
-        console.log(emails);
-        return { emails }; 
+            const emails = members.map((member) => member.email);
+            console.log(emails);
+            return { emails }; 
+        } catch (error) {
+            throw new Error('Error al encontrar proyecto');
+        }
     }
 
     async deleteMemberProject(id_project: number, email: string): Promise<string>{
-        const existingMember = await this.memberRepository.findOne({ where: {email, id_project}});
-        console.log(existingMember);
-        if (!existingMember) {
-          throw new Error('El Miembro no existe');
+        try{
+            const existingMember = await this.memberRepository.findOne({ where: {email, id_project}});
+            console.log(existingMember);
+            if (!existingMember) {
+            throw new Error('El Miembro no existe');
+            }
+            await this.memberRepository.remove(existingMember);
+            return 'Miembro eliminado';
+        } catch (error) {
+            throw new Error('Error al eliminar miembro');
         }
-        await this.memberRepository.remove(existingMember);
-        return 'Miembro eliminado';
     }
 
     async deleteMembersByProjectId(id_project: number): Promise<void> {
